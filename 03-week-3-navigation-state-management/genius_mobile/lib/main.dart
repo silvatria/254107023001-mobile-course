@@ -33,6 +33,7 @@ class MyHomePage extends StatefulWidget {
 var song = Song(
     title: 'Untungnya, Hidup Harus Tetap Berjalan',
     artist: 'Bernadya',
+    img: 'assets/images/untungnya_hidup_harus_tetap_berjalan.png',
     lyrics: '''
       [Verse 1]
       Persis setahun yang lalu ku dijauhkan dari yang tak
@@ -72,6 +73,7 @@ var song = Song(
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  late AnimationController _controller;
 
   void _incrementCounter() {
     setState(() {
@@ -82,19 +84,19 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      // appBar: AppBar(
        
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
+      //   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      //   title: Text(widget.title),
+      // ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text('\n${song.title} - ${song.artist}\n', style: TextStyle(fontWeight: FontWeight.bold)),
-            SizedBox(
-              height: 400,
-                width: 500,
+            Text('\n${song.title}\n', style: TextStyle(fontWeight: FontWeight.bold)),
+            ClipRRect(borderRadius: BorderRadius.circular(150), child: Image.asset(song.img, width: 150, height: 150)),
+            Text('${song.artist} \n', style: TextStyle(fontStyle: FontStyle.italic)),
+            Expanded(
                 child: SingleChildScrollView(
                 child: Text(song.lyrics),
               ),
