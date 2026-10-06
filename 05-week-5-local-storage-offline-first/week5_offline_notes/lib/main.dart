@@ -15,7 +15,7 @@ class OfflineNotesApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isDark = ref.watch(darkModeProvider).value ?? false;
- 
+    
     return MaterialApp(
       title: 'Offline Notes',
       debugShowCheckedModeBanner: false,
