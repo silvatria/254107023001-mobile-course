@@ -2,15 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
  
 import '../providers/prefs_providers.dart';
- 
+
+import '../providers/offline_providers.dart';
+
 class SettingsPage extends ConsumerWidget {
   const SettingsPage({super.key});
- 
+  
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final darkAsync = ref.watch(darkModeProvider);
     final lastOpenedAsync = ref.watch(lastOpenedProvider);
- 
+    // Di dalam build(), setelah ref.watch(lastOpenedProvider):
+    final offline = ref.watch(forceOfflineProvider);
+
     return Scaffold(
       appBar: AppBar(title: const Text('Pengaturan')),
       body: ListView(
@@ -47,6 +51,15 @@ class SettingsPage extends ConsumerWidget {
                 error: (e, _) => 'Error: $e',
               ),
             ),
+          ),
+          // Tambahkan sebagai anak terakhir ListView:
+          SwitchListTile(
+            secondary: const Icon(Icons.wifi_off),
+            title: const Text('Paksa mode offline'),
+            subtitle: const Text('Simulasi offline untuk demo dan testing'),
+            value: offline,
+            onChanged: (_) =>
+                ref.read(forceOfflineProvider.notifier).toggle(),
           ),
         ],
       ),
