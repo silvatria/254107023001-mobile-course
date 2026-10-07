@@ -2,6 +2,7 @@ import 'package:sqflite/sqflite.dart';
  
 import '../local/db.dart';
 import '../local/note.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
  
 class NoteRepository {
   NoteRepository({Future<Database> Function()? openDb})
@@ -70,3 +71,12 @@ class NoteRepository {
     await db.update('notes', {'dirty': 0}, where: 'dirty = 1');
   }
 }
+
+final noteRepositoryProvider = Provider<NoteRepository>((ref) {
+  return NoteRepository();
+});
+
+// Letakkan ini di baris paling bawah lib/repositories/note_repository.dart
+final noteByIdProvider = FutureProvider.family<Note?, int>(
+  (ref, id) => ref.watch(noteRepositoryProvider).getNoteById(id),
+);

@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
- 
+
 import '../data/local/note.dart';
 import '../providers/note_providers.dart';
 import '../widgets/note_form_dialog.dart';
 import 'settings_page.dart';
-
 import '../data/sync.dart';
 import 'posts_page.dart';
- 
 
-
- 
 class NotesPage extends ConsumerWidget {
   const NotesPage({super.key});
- 
+
   Future<void> _openForm(
     BuildContext context,
     WidgetRef ref, [
@@ -34,18 +30,16 @@ class NotesPage extends ConsumerWidget {
       );
     }
   }
- 
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notesAsync = ref.watch(notesProvider);
     final dirty = ref.watch(dirtyCountProvider).value ?? 0;
- 
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Offline Notes'),
         actions: [
-          // Sisipkan dua IconButton ini di dalam actions AppBar,
-          // sebelum tombol Pengaturan:
           IconButton(
             tooltip: 'Posts (cache-first)',
             icon: const Icon(Icons.article_outlined),
@@ -111,7 +105,9 @@ class NotesPage extends ConsumerWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
+                // ONTAP DIAKTIFKAN BIAR FORM EDIT MUNCUL PAS DI-KLIK:
                 onTap: () => _openForm(context, ref, note),
+                
                 trailing: IconButton(
                   tooltip: 'Hapus',
                   icon: const Icon(Icons.delete_outline),
@@ -131,10 +127,10 @@ class NotesPage extends ConsumerWidget {
     );
   }
 }
- 
+
 class _EmptyView extends StatelessWidget {
   const _EmptyView();
- 
+
   @override
   Widget build(BuildContext context) {
     return const Center(
@@ -149,13 +145,13 @@ class _EmptyView extends StatelessWidget {
     );
   }
 }
- 
+
 class _ErrorView extends StatelessWidget {
   const _ErrorView({required this.message, required this.onRetry});
- 
+
   final String message;
   final VoidCallback onRetry;
- 
+
   @override
   Widget build(BuildContext context) {
     return Center(

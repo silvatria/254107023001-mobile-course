@@ -3,7 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:week5_offline_notes/data/local/note.dart';
 import 'package:week5_offline_notes/data/repositories/note_repository.dart';
 import 'package:week5_offline_notes/data/sync.dart';
-import 'package:week5_offline_notes/providers/note_providers.dart';
+// Sembunyikan noteRepositoryProvider dari note_providers.dart agar tidak duplikat
+import 'package:week5_offline_notes/providers/note_providers.dart' hide noteRepositoryProvider;
  
 class FakeNoteRepository extends NoteRepository {
   FakeNoteRepository({List<Note> items = const [], this.throwError = false})
@@ -76,7 +77,7 @@ void main() {
         ],
       );
       addTearDown(container.dispose);
-
+ 
       await expectLater(
         container.read(notesProvider.future),
         throwsA(isA<Exception>()),
